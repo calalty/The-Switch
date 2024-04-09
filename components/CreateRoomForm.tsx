@@ -14,11 +14,10 @@ export const CreateRoomForm = () => {
 
     if (!input || !session) return;
 
-    const userId = uuid();
     const roomId = uuid();
 
     const user: User = {
-      id: userId,
+      id: session.data?.user?.id,
       isActive: false,
       name: session.data?.user?.name ?? "",
     };
@@ -41,7 +40,7 @@ export const CreateRoomForm = () => {
         }),
       }).then((res) => res.json());
 
-      router.push(`/rooms/${data.room.id}`);
+      router.push(`/rooms/${data.room.name}`);
     } catch (error) {
       console.error("Error creating room:", error);
     }

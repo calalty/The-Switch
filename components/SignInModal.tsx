@@ -41,7 +41,7 @@ export const SignIn = () => {
                 </p>
               </h1>
 
-              <form onSubmit={() => handleFormSubmit}>
+              <form onSubmit={handleFormSubmit}>
                 <div className="flex justify-center items-center">
                   <input
                     className="text-lg px-5 py-2 rounded-md rounded-tr-none rounded-br-none text-gray-800 font-mono"

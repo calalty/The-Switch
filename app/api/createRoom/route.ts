@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     created_at: Date.now(),
   };
 
-  await redis.hset("room", room.id, JSON.stringify(newRoom));
+  await redis.hset("room", room.name, JSON.stringify(newRoom));
 
   return NextResponse.json({ room: newRoom });
 }

@@ -17,6 +17,9 @@ $lightGrey: #525252;
       position: relative;
       vertical-align: middle;
       white-space: nowrap;
+      justify-content: center;
+      display: flex;
+      align-items: center;
       transition: color 0.3s ease;
       &:before,
       &:after {
@@ -93,7 +96,6 @@ $lightGrey: #525252;
           font-size: 42px;
           font-weight: 500;
           display: block;
-          font-family: "Mukta Malar", Arial;
           -webkit-backface-visibility: hidden;
         }
         &:before {

@@ -11,16 +11,29 @@ export const authOptions: NextAuthOptions = {
       },
       authorize: async (credentials, req) => {
         if (credentials && credentials.nickname) {
-          // Generate a random ID
-          const id = uuidv4(); // Example random ID generation
-          // Construct user object with provided nickname and random ID
-          const user = { id, name: credentials.nickname }; // Assign nickname to the name property
-          return Promise.resolve(user);
+          const id = uuidv4();
+          const user = { id, name: credentials.nickname };
+          return Promise.resolve({ ...user });
         } else {
-          // No nickname provided, return null
           return Promise.resolve(null);
         }
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
+
+      return session;
+    },
+  },
 };
