@@ -2,7 +2,7 @@
 
 import { signIn, useSession } from "next-auth/react";
 
-import { ChangeEvent, FormEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, FormEventHandler, useEffect, useState } from "react";
 import { Button } from "./Button";
 
 export const SignIn = () => {
@@ -14,8 +14,8 @@ export const SignIn = () => {
     setNickname(event.target.value);
   };
 
-  const handleFormSubmit = async (event: SubmitEvent) => {
-    event.preventDefault();
+  const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsModalOpen(false);
     await signIn("credentials", { nickname });
   };
@@ -41,7 +41,7 @@ export const SignIn = () => {
                 </p>
               </h1>
 
-              <form onSubmit={handleFormSubmit}>
+              <form onSubmit={handleOnSubmit}>
                 <div className="flex justify-center items-center">
                   <input
                     className="text-lg px-5 py-2 rounded-md rounded-tr-none rounded-br-none text-gray-800 font-mono"

@@ -13,11 +13,11 @@ export async function PATCH(
 
   const roomRes = await redis.hget("room", params?.slug);
 
-  const room: Room = JSON.parse(roomRes);
-
   if (!roomRes) {
     return new Error("Room not found");
   }
+
+  const room: Room = JSON.parse(roomRes);
 
   room.users.push(userData as User);
 

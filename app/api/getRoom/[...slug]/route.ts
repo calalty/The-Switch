@@ -11,6 +11,10 @@ export async function GET(
 ) {
   const roomRes = await redis.hget("room", params?.slug);
 
+  if (!roomRes) {
+    return new Error("Room not found");
+  }
+
   const room: Room = JSON.parse(roomRes);
 
   return NextResponse.json(room);

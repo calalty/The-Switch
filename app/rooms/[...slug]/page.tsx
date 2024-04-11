@@ -1,17 +1,15 @@
 import { Providers } from "@/app/providers";
 import { Header } from "@/components/Header";
 import {Switch} from "@/components/Switch";
-import { Room as RoomProps } from "@/typings";
 import { getServerSession } from "next-auth";
 
-export default async function Room({ params }: { params: { slug: string } }) {
+export default async function RoomPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const session = await getServerSession();
 
-  const room: RoomProps = await fetch(
-    `${process.env.APP_URL}/api/getRoom/${slug}`,
-    { cache: "no-store" }
-  )
+  const room =   await fetch(`${process.env.APP_URL}/api/getRoom/${slug}`, {
+    cache: "no-store",
+  })
     .then((res) => {
       if (!res.ok) {
         throw new Error(`Failed to fetch room. Status: ${res.status}`);
@@ -30,7 +28,7 @@ export default async function Room({ params }: { params: { slug: string } }) {
 
         <div className="flex flex-col justify-center min-h-screen">
         <Providers session={session}>
-            <Switch slug={slug} />
+            <Switch room={room} slug={slug} />
             </Providers>
         </div>
       </section>

@@ -4,12 +4,13 @@ import { useSession } from "next-auth/react";
 import { Room, User } from "@/typings";
 import { useRouter } from "next/navigation";
 import { v4 as uuid } from "uuid";
+import { createRoom } from "@/api/createRoom";
 export const CreateRoomForm = () => {
   const [input, setInput] = useState<string>("");
   const session = useSession();
   const router = useRouter();
 
-  const createRoom = async (e: FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!input || !session) return;
@@ -29,25 +30,11 @@ export const CreateRoomForm = () => {
       users: [user],
     };
 
-    try {
-      const data = await fetch("/api/createRoom", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          room,
-        }),
-      }).then((res) => res.json());
-
-      router.push(`/rooms/${data.room.name}`);
-    } catch (error) {
-      console.error("Error creating room:", error);
-    }
+    await createRoom({room}).then(() => router.push(`/rooms/${room.name}`))
   };
 
   return (
-    <form onSubmit={createRoom} className="flex flex-col gap-4">
+    <form onSubmit={handleOnSubmit} className="flex flex-col gap-4">
       <div className="flex items-center relative">
         <input
           type="checkbox"

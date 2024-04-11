@@ -12,7 +12,7 @@ export const JoinRoomForm = () => {
   const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-   await patchUserToRoom(input, {session}).then(() => router.push(`/room/${input}`))
+   await patchUserToRoom(input, {session}).then(() => router.push(`/rooms/${input}`))
   };
 
   return (

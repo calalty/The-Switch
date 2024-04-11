@@ -13,19 +13,21 @@ export async function PATCH(
 
   const roomRes = await redis.hget("room", params?.slug);
 
-  const room: Room = JSON.parse(roomRes);
-
   if (!roomRes) {
-    return new Error("Room not found");
+    return NextResponse.error();
   }
 
-  room.users.forEach((user) => {
-    if (user.id === id) {
-      user.isActive = isActive;
-    }
-  });
+  const room: Room = JSON.parse(roomRes);
 
-  await redis.hset("room", params?.slug, JSON.stringify(room));
+  const updatedRoom: Room = {
+    ...room,
+    users: room.users.map((user) => ({
+      ...user,
+      isActive: user.id === id ? isActive : user.isActive,
+    })),
+  };
 
-  return NextResponse.json({ room });
+  await redis.hset("room", params?.slug, JSON.stringify(updatedRoom));
+
+  return NextResponse.json({ room: updatedRoom });
 }
