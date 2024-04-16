@@ -1,6 +1,8 @@
 import Credentials from "next-auth/providers/credentials";
 import { NextAuthOptions } from "next-auth";
 import { v4 as uuidv4 } from "uuid";
+import redis from "@/redis";
+import { deleteUserFromRoom } from "@/api/deleteUserFromRoom";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -21,11 +23,21 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.name = user.name;
+    async jwt({ token, account }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.accessTokenExpires = (account.expires_at ?? 0) * 1000;
+        token.refreshToken = account.refresh_token;
+        token.id = account?.providerAccountId;
+
+        return token;
       }
+
+      if (Date.now()) {
+        await deleteUserFromRoom("c84909ad-016d-401c-9f2b-8f537634abae");
+        return token;
+      }
+
       return token;
     },
     async session({ session, token }) {

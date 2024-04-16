@@ -1,13 +1,18 @@
 import { Providers } from "@/app/providers";
 import { Header } from "@/components/Header";
-import {Switch} from "@/components/Switch";
+import { PersonTile } from "@/components/PersonTile";
+import { Switch } from "@/components/Switch";
 import { getServerSession } from "next-auth";
 
-export default async function RoomPage({ params }: { params: { slug: string } }) {
+export default async function RoomPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const { slug } = params;
   const session = await getServerSession();
 
-  const room =   await fetch(`${process.env.APP_URL}/api/getRoom/${slug}`, {
+  const room = await fetch(`${process.env.APP_URL}/api/getRoom/${slug}`, {
     cache: "no-store",
   })
     .then((res) => {
@@ -23,15 +28,19 @@ export default async function RoomPage({ params }: { params: { slug: string } })
   return (
     <>
       <Header session={session} />
-      <section className="flex min-h-screen flex-col text-5xl items-center mt-8 text-center leading-6 gap-4">
-        <h1 className="w-full tracking-wide text-[#3e4248]">{room?.name}</h1>
+      <div className="flex">
+        <section className=" w-full flex min-h-screen flex-col text-5xl items-center mt-8 text-center leading-6 gap-4">
+          <h1 className="w-full tracking-wide text-[#3e4248]">{room?.name}</h1>
 
-        <div className="flex flex-col justify-center min-h-screen">
-        <Providers session={session}>
-            <Switch room={room} slug={slug} />
+          <div className="flex flex-col justify-center min-h-screen">
+            <Providers session={session}>
+              <Switch room={room} slug={slug} />
             </Providers>
-        </div>
-      </section>
+          </div>
+        </section>
+
+        <PersonTile users={room?.users} />
+      </div>
     </>
   );
 }

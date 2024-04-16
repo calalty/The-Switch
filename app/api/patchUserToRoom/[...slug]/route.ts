@@ -18,8 +18,11 @@ export async function PATCH(
   }
 
   const room: Room = JSON.parse(roomRes);
+  const userExists = room.users.find(({ id }) => id === userData.id);
 
-  room.users.push(userData as User);
+  if (!userExists) {
+    room.users.push(userData as User);
+  }
 
   await redis.hset("room", params?.slug, JSON.stringify(room));
 
