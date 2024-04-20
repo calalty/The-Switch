@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from "react";
 import styles from "../styles/switch.module.scss";

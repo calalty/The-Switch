@@ -1,46 +1,16 @@
 import { Providers } from "@/app/providers";
 import { Header } from "@/components/Header";
-import { PersonTile } from "@/components/PersonTile";
-import { Switch } from "@/components/Switch";
+import { Room } from "@/components/Room";
 import { getServerSession } from "next-auth";
 
-export default async function RoomPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = params;
-  const session = await getServerSession();
-
-  const room = await fetch(`${process.env.APP_URL}/api/getRoom/${slug}`, {
-    cache: "no-store",
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(`Failed to fetch room. Status: ${res.status}`);
-      }
-      return res.json();
-    })
-    .catch((error) => {
-      console.error("Error fetching room:", error);
-    });
+export default async function RoomPage() {
+  const session = await getServerSession()
 
   return (
-    <>
+    <Providers session={session}>
       <Header session={session} />
-      <div className="flex">
-        <section className=" w-full flex min-h-screen flex-col text-5xl items-center mt-8 text-center leading-6 gap-4">
-          <h1 className="w-full tracking-wide text-[#3e4248]">{room?.name}</h1>
 
-          <div className="flex flex-col justify-center min-h-screen">
-            <Providers session={session}>
-              <Switch room={room} slug={slug} />
-            </Providers>
-          </div>
-        </section>
-
-        <PersonTile users={room?.users} />
-      </div>
-    </>
+        <Room />
+      </Providers>
   );
 }

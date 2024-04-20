@@ -1,6 +1,22 @@
+'use client';
+
 import { User } from "@/typings";
+import { Button } from "./Button";
+import { removeUserFromRoom } from "@/api/removeUserFromRoom";
+import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useDetectInactiveUser } from "@/hooks/use-detect-inactive-user";
 
 export const PersonTile = ({ users }: { users: User[] }) => {
+  const params = useParams()
+  const session = useSession()
+  const isUserInactive = useDetectInactiveUser()
+
+  useEffect(() => {
+    if (isUserInactive) removeUserFromRoom(params.slug[0], session.data?.user?.id!)
+  }, [isUserInactive, params.slug, session.data?.user?.id])
+
   if (!users) return null;
 
   return (
@@ -16,6 +32,6 @@ export const PersonTile = ({ users }: { users: User[] }) => {
           </li>
         ))}
       </ul>
-    </div>
+      </div>
   );
 };

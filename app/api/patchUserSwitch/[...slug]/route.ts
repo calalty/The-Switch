@@ -2,6 +2,7 @@ import { Room, User } from "@/typings";
 import redis from "../../../../redis";
 
 import { NextRequest, NextResponse } from "next/server";
+import { serverPusher } from "@/pusher";
 
 export const dynamic = "force-dynamic";
 
@@ -28,6 +29,7 @@ export async function PATCH(
   };
 
   await redis.hset("room", params?.slug, JSON.stringify(updatedRoom));
+  serverPusher.trigger("room", "user-switch", updatedRoom);
 
   return NextResponse.json({ room: updatedRoom });
 }

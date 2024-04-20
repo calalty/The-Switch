@@ -7,6 +7,7 @@ declare module "next-auth" {
     email?: string | null;
     id?: string | null;
     name?: string | null;
+    joinedAt?: string;
   }
 
   // Extend the session and add your custom property

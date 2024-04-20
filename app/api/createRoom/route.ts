@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
 
   const newRoom: Room = {
     ...room,
-    created_at: Date.now(),
+    created_at: Date.now()
   };
 
   await redis.hset("room", room.name, JSON.stringify(newRoom));

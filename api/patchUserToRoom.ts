@@ -15,7 +15,7 @@ export const patchUserToRoom = async (slug: string, payload: Payload) => {
       body: JSON.stringify({
         id: session?.user?.id,
         name: session?.user?.name,
-        isActive: false,
+        isActive: false
       }),
     }).then((res) => res.json());
   } catch (error) {
