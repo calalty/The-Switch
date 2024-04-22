@@ -12,7 +12,7 @@ export async function PATCH(
 ) {
   const { isActive, id } = await request.json();
 
-  const roomRes = await redis.hget("room", params?.slug);
+  const roomRes = await redis.hget(`room:${params?.slug[0]}`, params?.slug[0]);
 
   if (!roomRes) {
     return NextResponse.error();
@@ -28,8 +28,8 @@ export async function PATCH(
     })),
   };
 
-  await redis.hset("room", params?.slug, JSON.stringify(updatedRoom));
-  serverPusher.trigger("room", "user-switch", updatedRoom);
+  await serverPusher.trigger(params?.slug[0], "switch", updatedRoom);
+  await redis.hset(`room:${params?.slug[0]}`, params?.slug[0], JSON.stringify(updatedRoom));
 
   return NextResponse.json({ room: updatedRoom });
 }

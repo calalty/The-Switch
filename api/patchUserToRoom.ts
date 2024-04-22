@@ -6,6 +6,7 @@ type Payload = {
 
 export const patchUserToRoom = async (slug: string, payload: Payload) => {
   const { session } = payload;
+
   try {
     await fetch(`/api/patchUserToRoom/${slug}`, {
       method: "PATCH",

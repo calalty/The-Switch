@@ -6,7 +6,7 @@ export const removeUserFromRoom = async (slug: string, id: string) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: id.toString(),
+        id,
       }),
     }).then((res) => res.json());
   } catch (error) {

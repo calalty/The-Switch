@@ -9,7 +9,8 @@ export async function GET(
   _request: NextRequest,
   { params }: { params: { slug: string } }
 ) {
-  const roomRes = await redis.hget("room", params?.slug);
+  
+  const roomRes = await redis.hget(`room:${params?.slug[0]}`, params?.slug[0]);
 
   if (!roomRes) {
     return new Error("Room not found");

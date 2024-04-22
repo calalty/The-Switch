@@ -1,10 +1,14 @@
-import { Room } from "@/typings";
-
 export const getRoom = async (slug: string) => {
-    const res = await fetch(`/api/getRoom/${slug}`);
-    const data = await res.json();
-    const room: Room = data;
-  
-    return room;
-  };
-  
+  try {
+    const res = await fetch(`${process.env.APP_URL}/api/getRoom/${slug}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to fetch room. Status: ${res.status}`);
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("Error creating room:", error);
+    return null;
+  }
+};
