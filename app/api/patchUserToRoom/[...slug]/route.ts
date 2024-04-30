@@ -25,11 +25,14 @@ export async function PATCH(
     return new Error("User exists already");
   }
 
-  room.users.push(userData as User)
-
+  room.users.push(userData as User);
 
   await serverPusher.trigger(params?.slug[0], "new-user", room),
-  await redis.hset(`room:${params?.slug[0]}`, params.slug[0], JSON.stringify(room))
+    await redis.hset(
+      `room:${params?.slug[0]}`,
+      params.slug[0],
+      JSON.stringify(room)
+    );
 
   return NextResponse.json({ room });
 }

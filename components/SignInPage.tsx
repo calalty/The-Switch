@@ -1,7 +1,8 @@
 import { SignIn } from "@/components/SignInModal";
 import { CreateRoom } from "./CreateRoom";
 import { JoinRoom } from "./JoinRoom";
-export default async function SignInPage() {
+
+export default function SignInPage() {
   return (
     <main className="flex min-h-screen flex-col text-5xl items-center mt-8 text-center leading-6 gap-4">
       <h1 className="w-full tracking-wide text-[#3e4248]">

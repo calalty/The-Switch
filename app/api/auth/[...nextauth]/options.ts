@@ -9,7 +9,7 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         nickname: { label: "Nickname", type: "text" },
       },
-      authorize: async (credentials, req) => {
+      authorize: async (credentials, _req) => {
         if (credentials && credentials.nickname) {
           const id = uuidv4();
           const user = { id, name: credentials.nickname };

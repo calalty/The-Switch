@@ -2,15 +2,21 @@
 
 import { useState } from "react";
 import styles from "../styles/switch.module.scss";
-import { useSession } from "next-auth/react";
+
 import { patchUserSwitch } from "@/api/patchUserSwitch";
 import { Room } from "@/typings";
-import { useParams } from "next/navigation";
 
-export const Switch = ({ room }: { room: Room }) => {
-  const { data: session } = useSession();
+import { Session } from "next-auth";
 
-  const { slug } = useParams();
+export const Switch = ({
+  room,
+  session,
+  slug,
+}: {
+  room: Room;
+  session: Session | null;
+  slug: string;
+}) => {
   const isSwitchInUse = room?.users.some((user) => user.isActive);
   const isActiveUser = room?.users.find((user) => user.isActive)?.name;
   const isAnotherUserActive = room?.users.some(

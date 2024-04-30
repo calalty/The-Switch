@@ -1,23 +1,26 @@
-import { Room } from "@/typings";
+import axios from "axios";
+import { AxiosApiResponse, Room } from "@/typings";
 
 type Payload = {
   room: Room;
 };
 
-export const createRoom = async (payload: Payload) => {
+export const createRoom = async (
+  payload: Payload
+): Promise<AxiosApiResponse> => {
   const { room } = payload;
 
-  try {
-    await fetch("/api/createRoom", {
-      method: "POST",
+  const { data } = await axios.post(
+    "/api/createRoom",
+    {
+      room,
+    },
+    {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        room,
-      }),
-    }).then((res) => res.json());
-  } catch (error) {
-    console.error("Error creating room:", error);
-  }
+    }
+  );
+
+  return data;
 };

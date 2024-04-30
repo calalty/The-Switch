@@ -1,4 +1,3 @@
-import { Switch } from "@/components/Switch";
 import { Providers } from "./providers";
 import { getServerSession } from "next-auth";
 import { Header } from "@/components/Header";

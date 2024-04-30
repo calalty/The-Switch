@@ -11,3 +11,9 @@ export type Room = {
   name: string;
   users: User[];
 };
+
+export type AxiosApiResponse = {
+  error: AxiosError | null;
+  headers: AxiosResponseHeaders | Partial<RawAxiosResponseHeaders>;
+  isError: boolean;
+};
