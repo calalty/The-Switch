@@ -21,18 +21,16 @@ export async function PATCH(
   const room: Room = JSON.parse(roomRes);
   const userExists = room.users.find(({ id }) => id === userData.id);
 
-  if (userExists) {
-    return new Error("User exists already");
+  if (!userExists) {
+    room.users.push(userData as User);
+
+    await serverPusher.trigger(params?.slug[0], "new-user", room),
+      await redis.hset(
+        `room:${params?.slug[0]}`,
+        params.slug[0],
+        JSON.stringify(room)
+      );
   }
-
-  room.users.push(userData as User);
-
-  await serverPusher.trigger(params?.slug[0], "new-user", room),
-    await redis.hset(
-      `room:${params?.slug[0]}`,
-      params.slug[0],
-      JSON.stringify(room)
-    );
 
   return NextResponse.json({ room });
 }

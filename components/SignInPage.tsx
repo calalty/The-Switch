@@ -13,9 +13,6 @@ export default function SignInPage() {
           tch
         </p>
       </h1>
-
-      <p className="text-2xl text-[#3e4248]">110 players online</p>
-
       <div className="flex gap-4">
         <CreateRoom />
         <JoinRoom />

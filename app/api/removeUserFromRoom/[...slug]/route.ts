@@ -12,10 +12,6 @@ export async function PATCH(
 ) {
   const { id } = await request.json();
 
-  if (!id) {
-    throw new Error("User id not provided");
-  }
-
   const roomRes = await redis.hget(`room:${params?.slug[0]}`, params?.slug[0]);
 
   if (!roomRes) {

@@ -12,17 +12,6 @@ declare module "next-auth" {
 
   // Extend the session and add your custom property
   interface Session {
-    isRefreshError: boolean;
-    accessToken?: string;
-    accessTokenExpires?: number;
     user?: User;
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    accessToken: string | undefined;
-    accessTokenExpires: number;
-    refreshToken: string | undefined;
   }
 }
