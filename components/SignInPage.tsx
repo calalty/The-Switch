@@ -1,3 +1,5 @@
+'use client';
+
 import { SignIn } from "@/components/SignInModal";
 import { CreateRoom } from "./CreateRoom";
 import { JoinRoom } from "./JoinRoom";
