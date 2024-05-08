@@ -63,7 +63,7 @@ export const Room = ({ initialRoom, slug, session }: Props) => {
   return (
     <div className="flex">
       {room && (
-        <section className="w-full flex min-h-screen flex-col text-5xl items-center mt-8 text-center leading-6 gap-4">
+        <section className="w-full flex min-h-fit flex-col text-5xl items-center mt-8 text-center leading-6 gap-4">
           <h1 className="w-full tracking-wide text-[#3e4248]">{room?.name}</h1>
           <div className="flex flex-col justify-center min-h-screen">
             <Switch slug={slug} session={session} room={room} />
