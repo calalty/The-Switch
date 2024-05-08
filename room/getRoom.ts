@@ -1,6 +1,8 @@
+import { env } from "process";
+
 export const getRoom = async (slug: string) => {
   try {
-    const res = await fetch(`/api/getRoom/${slug}`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_APP_URL}/api/getRoom/${slug}`, {
       cache: "no-store",
     });
     if (!res.ok) {
