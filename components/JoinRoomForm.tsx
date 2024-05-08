@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { Button } from "./Button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { patchUserToRoom } from "@/api/patchUserToRoom";
+import { patchUserToRoom } from "@/room/patchUserToRoom";
 
 export const JoinRoomForm = () => {
   const [input, setInput] = useState<string>("");

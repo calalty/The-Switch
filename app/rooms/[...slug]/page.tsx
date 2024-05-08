@@ -1,4 +1,4 @@
-import { getRoom } from "@/api/getRoom";
+import { getRoom } from "@/room/getRoom";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Providers } from "@/app/providers";
 import { Header } from "@/components/Header";

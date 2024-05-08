@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "../styles/switch.module.scss";
 
-import { patchUserSwitch } from "@/api/patchUserSwitch";
+import { patchUserSwitch } from "@/room/patchUserSwitch";
 import { Room } from "@/typings";
 
 import { Session } from "next-auth";
