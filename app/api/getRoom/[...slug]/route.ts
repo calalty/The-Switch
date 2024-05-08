@@ -8,15 +8,23 @@ export const dynamic = "force-dynamic";
 export async function GET(
   _request: NextRequest,
   { params }: { params: { slug: string } }
-) {
-  
-  const roomRes = await redis.hget(`room:${params?.slug[0]}`, params?.slug[0]);
+): Promise<void | Response> {
+  try {
+    const roomRes = await redis.hget(
+      `room:${params?.slug[0]}`,
+      params?.slug[0]
+    );
 
-  if (!roomRes) {
-    return new Error("Room not found");
+    if (!roomRes) {
+      throw new Error("Room not found");
+    }
+
+    const room: Room = JSON.parse(roomRes);
+
+    return NextResponse.json(room);
+  } catch (error) {
+    return new Response("Internal Server Error", {
+      status: 500,
+    });
   }
-
-  const room: Room = JSON.parse(roomRes);
-
-  return NextResponse.json(room);
 }
