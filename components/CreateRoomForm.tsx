@@ -8,17 +8,19 @@ import { createRoom } from "@/room/createRoom";
 
 export const CreateRoomForm = () => {
   const [input, setInput] = useState<string>("");
-  const session = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const [isCreateRoomError, setIsCreateRoomError] = useState(false);
   const [roomName, setIsRoomName] = useState<string>();
   const roomId = uuid();
 
   const user: User = {
-    id: session.data?.user?.id ?? 'no id produced!!!',
+    id: session?.user?.id ?? 'no id produced!!!',
     isActive: false,
-    name: session.data?.user?.name ?? "",
+    name: session?.user?.name ?? "",
   };
+
+  console.log({ session })
 
   const room: Room = {
     id: roomId,
