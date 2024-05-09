@@ -20,7 +20,7 @@ export const CreateRoomForm = () => {
     name: session?.user?.name ?? "",
   };
 
-  console.log({ session })
+  console.log('client session', { session })
 
   const room: Room = {
     id: roomId,

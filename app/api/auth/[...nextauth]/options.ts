@@ -26,17 +26,13 @@ export const authOptions: NextAuthOptions = {
       if (account) {
         token.id = account?.providerAccountId;
 
-        console.log('TOKEN ID APPLIED')
         return token;
       }
-
-      console.log('NO TOKEN ID APPLIED!')
 
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        console.log('USER ID APPLIED')
         session.user.id = token.id as string;
       }
 
