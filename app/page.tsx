@@ -10,6 +10,7 @@ export default async function Home() {
 
   return (
     <Providers session={session}>
+      <h1>{JSON.stringify(session?.user)}</h1>
       <Header session={session} />
       <SignInPage />
     </Providers>
