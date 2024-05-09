@@ -12,7 +12,8 @@ export const authOptions: NextAuthOptions = {
       authorize: async (credentials, _req) => {
         if (credentials && credentials.nickname) {
           const id = uuidv4();
-          const user = { id: '1233211', name: credentials.nickname };
+          const user = { id, name: credentials.nickname };
+          debugger;
           return Promise.resolve({ ...user });
         } else {
           return Promise.resolve(null);
@@ -25,17 +26,20 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account }) {
       if (account) {
         token.id = account?.providerAccountId;
-
+        debugger;
         return token;
       }
 
+      debugger;
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
+        debugger;
         session.user.id = token.id as string;
       }
 
+      debugger;
       return session;
     },
   },
