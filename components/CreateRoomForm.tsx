@@ -15,7 +15,7 @@ export const CreateRoomForm = () => {
   const roomId = uuid();
 
   const user: User = {
-    id: session.data?.user?.id,
+    id: session.data?.user?.id ?? 'no id produced!!!',
     isActive: false,
     name: session.data?.user?.name ?? "",
   };
