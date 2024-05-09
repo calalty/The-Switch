@@ -12,7 +12,7 @@ export const authOptions: NextAuthOptions = {
       authorize: async (credentials, _req) => {
         if (credentials && credentials.nickname) {
           const id = uuidv4();
-          const user = { id, name: credentials.nickname };
+          const user = { id: '1233211', name: credentials.nickname };
           return Promise.resolve({ ...user });
         } else {
           return Promise.resolve(null);
