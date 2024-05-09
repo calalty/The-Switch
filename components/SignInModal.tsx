@@ -2,7 +2,7 @@
 
 import { signIn, useSession } from "next-auth/react";
 
-import { ChangeEvent, FormEvent, FormEventHandler, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button } from "./Button";
 
 export const SignIn = () => {

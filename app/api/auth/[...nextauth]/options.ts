@@ -13,7 +13,6 @@ export const authOptions: NextAuthOptions = {
         if (credentials && credentials.nickname) {
           const id = uuidv4();
           const user = { id, name: credentials.nickname };
-          debugger;
           return Promise.resolve({ ...user });
         } else {
           return Promise.resolve(null);
@@ -23,14 +22,9 @@ export const authOptions: NextAuthOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async jwt({ token, account }) {
-      if (account) {
-        token.id = account?.providerAccountId;
-        debugger;
-        return token;
-      }
+    async jwt({ token }) {
+      token.id = "dkdkdkdkdkdk";
 
-      debugger;
       return token;
     },
     async session({ session, token }) {
