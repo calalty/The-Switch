@@ -24,7 +24,6 @@ export const Room = ({ initialRoom, slug, session }: Props) => {
   const roomUsers = room?.users;
   const user = session?.user;
 
-  console.log({ roomUsers }, { user })
   const isUserAway = !roomUsers?.some(({ id }) => user?.id === id);
   const isUsersUndefined = roomUsers === undefined;
 

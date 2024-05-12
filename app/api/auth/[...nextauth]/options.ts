@@ -3,10 +3,6 @@ import { NextAuthOptions } from "next-auth";
 import { v4 as uuidv4 } from "uuid";
 
 export const authOptions: NextAuthOptions = {
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,
-  },
   providers: [
     Credentials({
       name: "Nickname",
@@ -31,7 +27,6 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
       }
 
-      console.log("token : ", token);
       return token;
     },
     async session({ session, token, user }) {
@@ -39,7 +34,6 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id as string;
       }
 
-      console.log("session:", session);
       return session;
     },
   },
