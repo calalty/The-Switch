@@ -1,6 +1,7 @@
 'use client';
 
 import { Session } from "next-auth";
+import Link from "next/link";
 import React from "react";
 
 type HeaderProps = {
@@ -9,10 +10,10 @@ type HeaderProps = {
 export const Header = async ({ session }: HeaderProps) => {
   return (
     <header className="flex flex-row px-5 py-2 bg-[#32cd32] border-b-1 border-gray-200 shadow-md justify-between items-center text-white">
-      <p className="text-2xl">
+      <Link href='/' className="text-2xl">
         The Sw
         <span className="text-xl -mr-1 font-black">⏻</span> tch
-      </p>
+      </Link>
 
       <div className="flex flex-row items-center gap-4">
         {session && (
