@@ -3,8 +3,18 @@
 import { SignIn } from "@/components/SignInModal";
 import { CreateRoom } from "./CreateRoom";
 import { JoinRoom } from "./JoinRoom";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export default function SignInPage() {
+  const { update, data: session } = useSession()
+
+  useEffect(() => {
+    if (session?.user?.id) return;
+
+    update();
+  }, [update, session?.user?.id]);
+
   return (
     <main className="flex min-h-fit flex-col text-5xl items-center mt-8 text-center leading-6 gap-y-10">
       <h1 className="w-full tracking-wide text-[#3e4248]">
