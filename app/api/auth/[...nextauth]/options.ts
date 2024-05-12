@@ -3,6 +3,10 @@ import { NextAuthOptions } from "next-auth";
 import { v4 as uuidv4 } from "uuid";
 
 export const authOptions: NextAuthOptions = {
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+  },
   providers: [
     Credentials({
       name: "Nickname",
@@ -15,29 +19,23 @@ export const authOptions: NextAuthOptions = {
           const user = { id, name: credentials.nickname };
           return Promise.resolve({ ...user });
         } else {
-          return Promise.resolve(null);
+          throw new Error();
         }
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async jwt({ token }) {
-      token.id = "dkdkdkdkdkdk";
-
+    async jwt({ token, user }) {
       return token;
     },
-    async session({ session, token }) {
-      if (session.user) {
-        debugger;
-        session.user.id = token.id as string;
+    async session({ session, token, user }) {
+      if (token && session.user) {
+        session.user.id = token.sub;
       }
 
-      debugger;
+      console.log("session:", session);
       return session;
     },
-  },
-  jwt: {
-    secret: process.env.NEXTAUTH_SECRET,
   },
 };
