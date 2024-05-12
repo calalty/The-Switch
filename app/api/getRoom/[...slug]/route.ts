@@ -7,13 +7,10 @@ export const dynamic = "force-dynamic";
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params: { slug } }: { params: { slug: string } }
 ): Promise<void | Response> {
   try {
-    const roomRes = await redis.hget(
-      `room:${params?.slug[0]}`,
-      params?.slug[0]
-    );
+    const roomRes = await redis.hget(`room:${slug}`, slug);
 
     if (!roomRes) {
       throw new Error("Room not found");

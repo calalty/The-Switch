@@ -8,15 +8,12 @@ export const dynamic = "force-dynamic";
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params: { slug } }: { params: { slug: string } }
 ) {
   try {
     const { isActive, id } = await request.json();
 
-    const roomRes = await redis.hget(
-      `room:${params?.slug[0]}`,
-      params?.slug[0]
-    );
+    const roomRes = await redis.hget(`room:${slug}`, slug);
 
     if (!roomRes) {
       throw new Error("Room not found");
@@ -32,12 +29,8 @@ export async function PATCH(
       })),
     };
 
-    await serverPusher.trigger(params?.slug[0], "switch", updatedRoom);
-    await redis.hset(
-      `room:${params?.slug[0]}`,
-      params?.slug[0],
-      JSON.stringify(updatedRoom)
-    );
+    await serverPusher.trigger(slug, "switch", updatedRoom);
+    await redis.hset(`room:${slug}`, slug, JSON.stringify(updatedRoom));
 
     return NextResponse.json({ room: updatedRoom });
   } catch (error) {

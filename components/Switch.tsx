@@ -35,7 +35,7 @@ export const Switch = ({
 
   return (
     <>
-      <p className="mb-6">{!isActiveUser ? 'Nobody is' : isActiveUser?.id === session?.user?.id ? 'You are' : `${isActiveUser?.name} is`} using the switch!</p>
+      <p className="px-4">{!isActiveUser ? 'Nobody is' : isActiveUser?.id === session?.user?.id ? 'You are' : `${isActiveUser?.name} is`} using the switch!</p>
       <label className={`${styles.switch} ${isSwitchInUse ? styles['switch-active'] : styles['switch-inactive']}`}>
         <input
           type="checkbox"

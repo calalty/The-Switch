@@ -6,8 +6,8 @@ export const dynamic = "force-dynamic";
 
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params: { slug } }: { params: { slug: string } }
 ) {
-  await serverPusher.trigger(params?.slug[0], "remove-room", null);
-  await redis.del(`room:${params?.slug[0]}`);
+  await serverPusher.trigger(slug, "remove-room", null);
+  await redis.del(`room:${slug}`);
 }

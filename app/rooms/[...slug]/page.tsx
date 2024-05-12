@@ -12,7 +12,7 @@ export default async function RoomPage({
 }) {
   const session = await getServerSession(authOptions);
 
-  const room = await getRoom(slug[0]);
+  const room = await getRoom(slug);
 
   return (
     <Providers session={session}>
