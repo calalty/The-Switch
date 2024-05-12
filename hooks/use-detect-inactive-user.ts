@@ -4,7 +4,7 @@ export const useDetectInactiveUser = () => {
   const [isUserInactive, setIsUserInactive] = useState<boolean>(false);
 
   const setExpiryTime = () => {
-    const expiryTime = Date.now() + 30 * 1000;
+    const expiryTime = Date.now() + 30 * 1000; // 30 seconds in milliseconds
     localStorage.setItem("expiryTime", expiryTime.toString());
   };
 
@@ -18,16 +18,18 @@ export const useDetectInactiveUser = () => {
   useEffect(() => {
     setExpiryTime();
 
-    window.addEventListener("click", setExpiryTime);
-    window.addEventListener("keypress", setExpiryTime);
-    window.addEventListener("scroll", setExpiryTime);
-    window.addEventListener("mousemove", setExpiryTime);
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setExpiryTime();
+      } else {
+        checkForInactivity();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      window.removeEventListener("click", setExpiryTime);
-      window.removeEventListener("keypress", setExpiryTime);
-      window.removeEventListener("scroll", setExpiryTime);
-      window.removeEventListener("mousemove", setExpiryTime);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
