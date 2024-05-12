@@ -25,7 +25,7 @@ export const Room = ({ initialRoom, slug, session }: Props) => {
   const user = session?.user;
 
   const isUserAway = !roomUsers?.some(({ id }) => user?.id === id);
-  const isUsersUndefined = roomUsers === undefined;
+  const isNoUsers = !roomUsers || !room.users.length;
 
   useEffect(() => {
     const handleRoom = (newRoom: RoomType) => {
@@ -63,7 +63,7 @@ export const Room = ({ initialRoom, slug, session }: Props) => {
 
   return (
     <div className="flex">
-      {room && (
+      {room && !isNoUsers && (
         <section className="w-full flex min-h-fit flex-col text-5xl items-center mt-8 text-center leading-6 gap-4">
           <h1 className="w-full tracking-wide text-[#3e4248]">{room?.name}</h1>
           <div className="flex flex-col justify-center min-h-screen">
@@ -76,7 +76,7 @@ export const Room = ({ initialRoom, slug, session }: Props) => {
       {isUserAway && (
         <AwayModal
           text={
-            isUsersUndefined
+            isNoUsers
               ? "Sorry, room no longer exists!"
               : "Sorry, you were AFK!"
           }
