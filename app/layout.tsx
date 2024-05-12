@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bigshot_One } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
 
 const inter = Bigshot_One({ subsets: ["latin"], weight: "400" });
 
@@ -16,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}><Suspense fallback={null}>{children}</Suspense></body>
     </html>
   );
 }
