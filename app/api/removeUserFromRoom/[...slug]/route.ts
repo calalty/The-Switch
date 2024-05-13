@@ -3,6 +3,7 @@ import redis from "../../../../redis";
 
 import { NextRequest, NextResponse } from "next/server";
 import { serverPusher } from "@/pusher";
+import { handleRequest } from "@/server-instance";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +11,7 @@ export async function PATCH(
   request: NextRequest,
   { params: { slug } }: { params: { slug: string } }
 ) {
-  try {
+  return handleRequest(async () => {
     const id = await request.json();
 
     const roomRes = await redis.hget(`room:${slug}`, slug);
@@ -28,9 +29,5 @@ export async function PATCH(
     await redis.hset(`room:${slug}`, slug, JSON.stringify(updatedRoom));
 
     return NextResponse.json({ room: updatedRoom });
-  } catch (error) {
-    return new Response("Internal Server Error", {
-      status: 500,
-    });
-  }
+  });
 }

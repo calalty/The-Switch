@@ -2,6 +2,7 @@ import { Room } from "@/typings";
 import redis from "../../../../redis";
 
 import { NextRequest, NextResponse } from "next/server";
+import { handleRequest } from "@/server-instance";
 
 export const dynamic = "force-dynamic";
 
@@ -9,7 +10,7 @@ export async function GET(
   _request: NextRequest,
   { params: { slug } }: { params: { slug: string } }
 ): Promise<void | Response> {
-  try {
+  return handleRequest(async () => {
     const roomRes = await redis.hget(`room:${slug}`, slug);
 
     if (!roomRes) {
@@ -17,11 +18,6 @@ export async function GET(
     }
 
     const room: Room = JSON.parse(roomRes);
-
     return NextResponse.json(room);
-  } catch (error) {
-    return new Response("Internal Server Error", {
-      status: 500,
-    });
-  }
+  });
 }
