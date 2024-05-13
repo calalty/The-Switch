@@ -3,7 +3,7 @@
 import { Room as RoomType } from "@/typings";
 import { useEffect, useState } from "react";
 import { Switch } from "./Switch";
-import { PersonTile } from "./PersonTile";
+import { PersonTile } from "./UsersTile";
 import { clientPusher } from "@/pusher";
 import { useDetectInactiveUser } from "@/hooks/use-detect-inactive-user";
 import { AwayModal } from "./AwayModal";
