@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest): Promise<void | Response> {
   try {
-    const { room } = await request.json();
+    const room = await request.json();
 
     const roomExists = await redis.hget(`room:${room.name}`, room.name);
 

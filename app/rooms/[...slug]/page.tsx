@@ -1,8 +1,8 @@
-import { getRoom } from "@/room/getRoom";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Providers } from "@/app/providers";
 import { Header } from "@/components/Header";
 import { Room } from "@/components/Room";
+import { getRoom } from "@/instance";
 import { getServerSession } from "next-auth";
 
 export default async function RoomPage({

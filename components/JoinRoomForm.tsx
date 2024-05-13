@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { Button } from "./Button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { patchUserToRoom } from "@/room/patchUserToRoom";
+import { patchUserToRoom } from "@/instance";
 
 export const JoinRoomForm = () => {
   const [input, setInput] = useState<string>("");
@@ -14,12 +14,14 @@ export const JoinRoomForm = () => {
   const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      await patchUserToRoom(input, { session });
-      router.push(`/rooms/${input}`);
-    } catch (error) {
-      setIsRoomName(input);
-      setIsJoinRoomError(true);
+    if (session) {
+      try {
+        await patchUserToRoom(input, session);
+        router.push(`/rooms/${input}`);
+      } catch (error) {
+        setIsRoomName(input);
+        setIsJoinRoomError(true);
+      }
     }
   };
 

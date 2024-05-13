@@ -11,7 +11,7 @@ export async function PATCH(
   { params: { slug } }: { params: { slug: string } }
 ) {
   try {
-    const { id } = await request.json();
+    const id = await request.json();
 
     const roomRes = await redis.hget(`room:${slug}`, slug);
 

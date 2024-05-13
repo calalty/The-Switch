@@ -5,11 +5,10 @@ import { useEffect, useState } from "react";
 import { Switch } from "./Switch";
 import { PersonTile } from "./PersonTile";
 import { clientPusher } from "@/pusher";
-import { removeRoom } from "@/room/removeRoom";
-import { removeUserFromRoom } from "@/room/removeUserFromRoom";
 import { useDetectInactiveUser } from "@/hooks/use-detect-inactive-user";
 import { AwayModal } from "./AwayModal";
 import { Session } from "next-auth";
+import { removeRoom, removeUserFromRoom } from "@/instance";
 
 type Props = {
   initialRoom: RoomType;
@@ -24,7 +23,7 @@ export const Room = ({ initialRoom, slug, session }: Props) => {
   const roomUsers = room?.users;
   const user = session?.user;
 
-  const isUserAway = !roomUsers?.some(({ id }) => user?.id === id);
+  const isUserInRoom = roomUsers?.some(({ id }) => user?.id === id);
   const isNoUsers = !roomUsers || !room.users.length;
 
   useEffect(() => {
@@ -48,14 +47,14 @@ export const Room = ({ initialRoom, slug, session }: Props) => {
   }, [roomId]);
 
   useEffect(() => {
-    if (isUserInactive) {
+    if (isUserInactive && isUserInRoom) {
       removeUserFromRoom(roomId, user?.id!);
       const usersToRemove = roomUsers?.filter(({ id }) => id !== user?.id);
       usersToRemove?.forEach(({ id }) =>
         removeUserFromRoom(roomId, user?.id ?? id!)
       );
     }
-  }, [isUserInactive, roomId, user?.id, roomUsers]);
+  }, [isUserInactive, roomId, user?.id, roomUsers, isUserInRoom]);
 
   useEffect(() => {
     if (roomUsers && !roomUsers.length) removeRoom(roomId);
@@ -73,7 +72,7 @@ export const Room = ({ initialRoom, slug, session }: Props) => {
       )}
 
       <PersonTile users={room?.users} />
-      {isUserAway && (
+      {!isUserInRoom && (
         <AwayModal
           text={
             isNoUsers

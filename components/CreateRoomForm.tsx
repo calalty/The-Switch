@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { Room, User } from "@/typings";
 import { useRouter } from "next/navigation";
 import { v4 as uuid } from "uuid";
-import { createRoom } from "@/room/createRoom";
+import { createRoom } from "@/instance";
 
 export const CreateRoomForm = () => {
   const [input, setInput] = useState<string>("");
@@ -33,7 +33,7 @@ export const CreateRoomForm = () => {
     if (!input || !session) return;
 
     try {
-      await createRoom({ room });
+      await createRoom(room);
       router.push(`/rooms/${room.name}`);
     } catch (error) {
       setIsRoomName(room.name);

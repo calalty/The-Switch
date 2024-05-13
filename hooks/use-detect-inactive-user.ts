@@ -4,7 +4,7 @@ export const useDetectInactiveUser = () => {
   const [isUserInactive, setIsUserInactive] = useState<boolean>(false);
 
   const setExpiryTime = () => {
-    const expiryTime = Date.now() + 7 * 60 * 60 * 1000;
+    const expiryTime = Date.now();
     localStorage.setItem("expiryTime", expiryTime.toString());
   };
 

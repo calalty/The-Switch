@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { serverPusher } from "@/pusher";
 import redis from "@/redis";
 
@@ -8,6 +8,13 @@ export async function DELETE(
   _request: NextRequest,
   { params: { slug } }: { params: { slug: string } }
 ) {
-  await serverPusher.trigger(slug, "remove-room", null);
-  await redis.del(`room:${slug}`);
+  try {
+    await serverPusher.trigger(slug, "remove-room", null);
+    await redis.del(`room:${slug}`);
+    return NextResponse.json(null);
+  } catch (error) {
+    return new Response("Internal Server Error", {
+      status: 500,
+    });
+  }
 }
