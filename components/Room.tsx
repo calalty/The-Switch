@@ -3,7 +3,7 @@
 import { Room as RoomType } from "@/typings";
 import { useEffect, useState } from "react";
 import { Switch } from "./Switch";
-import { PersonTile } from "./UsersTile";
+import { UsersTile } from "./UsersTile";
 import { clientPusher } from "@/pusher";
 import { useDetectInactiveUser } from "@/hooks/use-detect-inactive-user";
 import { AwayModal } from "./AwayModal";
@@ -71,7 +71,7 @@ export const Room = ({ initialRoom, slug, session }: Props) => {
         </section>
       )}
 
-      <PersonTile users={room?.users} />
+      <UsersTile users={room?.users} />
       {!isUserInRoom && (
         <AwayModal
           text={
