@@ -5,6 +5,7 @@ import { CreateRoom } from "./CreateRoom";
 import { JoinRoom } from "./JoinRoom";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import Image from "next/image";
 
 export default function SignInPage() {
   const { update, data: session } = useSession()
@@ -25,10 +26,20 @@ export default function SignInPage() {
           tch
         </p>
       </h1>
+
       <div className="flex gap-4">
         <CreateRoom />
         <JoinRoom />
       </div>
+
+      <Image
+        src="/users.svg"
+        alt="Users on a call"
+        width={350}
+        height={24}
+        priority
+      />
+
       <SignIn />
     </main >
   );

@@ -14,15 +14,13 @@ export const Button = ({
   onClick,
   disabled,
   isRounded = true,
-}: Props) => {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`${styles.button} text-lg font-mono font-black ${isRounded ? "rounded-md" : "rounded-tl-none rounded-bl-none"
-        }`}
-    >
-      <span className={styles.front}>{text}</span>
-    </button>
-  );
-};
+}: Props) => (
+  <button
+    onClick={onClick}
+    disabled={disabled}
+    className={`${styles.button} text-lg font-mono font-black ${isRounded ? "rounded-md" : "rounded-tl-none rounded-bl-none"
+      }`}
+  >
+    <span className={styles.front}>{text}</span>
+  </button>
+);

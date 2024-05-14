@@ -1,10 +1,9 @@
 import { Room } from "@/typings";
 import redis from "../../../redis";
 import { NextRequest, NextResponse } from "next/server";
-import { handleRequest } from "@/server-instance";
 
 export async function POST(request: NextRequest): Promise<void | Response> {
-  return handleRequest(async () => {
+  try {
     const room = await request.json();
 
     const roomExists = await redis.hget(`room:${room.name}`, room.name);
@@ -21,5 +20,8 @@ export async function POST(request: NextRequest): Promise<void | Response> {
     await redis.hset(`room:${room.name}`, room.name, JSON.stringify(newRoom));
 
     return NextResponse.json({ room: newRoom });
-  });
+  } catch (error) {
+    console.error("Internal Server Error:", error);
+    return new Response("Internal Server Error", { status: 500 });
+  }
 }

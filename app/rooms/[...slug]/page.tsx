@@ -11,7 +11,6 @@ export default async function RoomPage({
   params: { slug: string };
 }) {
   const session = await getServerSession(authOptions);
-
   const room = await getRoom(slug);
 
   return (
