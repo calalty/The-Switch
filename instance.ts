@@ -16,11 +16,7 @@ type PayloadPatchUserSwitch = {
 
 const makeRequest = async (config: AxiosRequestConfig) => {
   try {
-    if (config.method?.toLowerCase() === "get") {
-      config.baseURL = `${env.NEXTAUTH_URL}/api`;
-    } else {
-      config.baseURL = "/api";
-    }
+    config.baseURL = env.NEXTAUTH_URL ? `${env.NEXTAUTH_URL}/api` : "/api";
 
     const { data } = await axiosInstance(config);
     return data;
