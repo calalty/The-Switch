@@ -17,7 +17,7 @@ export const JoinRoomForm = () => {
     if (session) {
       try {
         await patchUserToRoom(input, session);
-        router.push(`/rooms/${input}`);
+        router.push(`/room/${input}`);
       } catch (error) {
         setIsRoomName(input);
         setIsJoinRoomError(true);

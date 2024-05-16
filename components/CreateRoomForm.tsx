@@ -34,7 +34,7 @@ export const CreateRoomForm = () => {
 
     try {
       await createRoom(room);
-      router.push(`/rooms/${room.name}`);
+      router.push(`/room/${room.name}`);
     } catch (error) {
       setIsRoomName(room.name);
       setIsCreateRoomError(true);

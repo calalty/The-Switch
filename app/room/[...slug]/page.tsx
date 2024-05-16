@@ -1,6 +1,4 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
-import { Providers } from "@/app/providers";
-import { Header } from "@/components/Header";
 import { Room } from "@/components/Room";
 import { getRoom, removeUserFromRoom } from "@/instance";
 import { getServerSession } from "next-auth";
@@ -18,10 +16,5 @@ export default async function RoomPage({
     redirect("/");
   }
 
-  return (
-    <Providers session={session}>
-      <Header session={session} />
-      <Room initialRoom={room} session={session} slug={slug} />
-    </Providers>
-  );
+  return <Room initialRoom={room} session={session} slug={slug} />;
 }
