@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Bigshot_One } from "next/font/google";
 import "./globals.css";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { authOptions } from "./api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { Providers } from "./providers";
 import { Header } from "@/components/Header";
+import { getRooms, removeUserFromRoom } from "@/instance";
 
 const inter = Bigshot_One({ subsets: ["latin"], weight: "400" });
 

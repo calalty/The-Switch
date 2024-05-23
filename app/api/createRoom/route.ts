@@ -18,6 +18,10 @@ export async function POST(request: NextRequest): Promise<void | Response> {
     }
 
     await redis.hset(`room:${room.name}`, room.name, JSON.stringify(newRoom));
+    const allRoomsString = await redis.get("rooms");
+    let allRooms: Room[] = allRoomsString ? JSON.parse(allRoomsString) : [];
+    allRooms.push(newRoom);
+    await redis.set("rooms", JSON.stringify(allRooms));
 
     return NextResponse.json({ room: newRoom });
   } catch (error) {

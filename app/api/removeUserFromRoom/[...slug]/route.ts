@@ -21,11 +21,25 @@ export async function PATCH(
 
     const room: Room = JSON.parse(roomRes);
 
-    const updatedUsers = room.users.filter((userId) => userId.id !== id);
+    const updatedUsers = room.users.filter((user) => user.id !== id);
     const updatedRoom = { ...room, users: updatedUsers };
 
     await serverPusher.trigger(slug, "remove-user", updatedRoom);
     await redis.hset(`room:${slug}`, slug, JSON.stringify(updatedRoom));
+
+    const allRoomsString = await redis.get("rooms");
+    const allRooms: Room[] = JSON.parse(allRoomsString!);
+
+    allRooms.forEach(({ users }) => {
+      if (users && users.length > 0) {
+        const userIndex = users.findIndex((user) => user.id === id);
+        if (userIndex !== -1) {
+          users.splice(userIndex, 1);
+        }
+      }
+    });
+
+    await redis.set("rooms", JSON.stringify(allRooms));
 
     return NextResponse.json({ room: updatedRoom });
   } catch (error) {

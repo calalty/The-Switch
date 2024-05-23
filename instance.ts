@@ -41,6 +41,13 @@ export const getRoom = (slug: string): Promise<Room> => {
   });
 };
 
+export const getRooms = (): Promise<Room[]> => {
+  return makeRequest({
+    method: "get",
+    url: "/getRooms",
+  });
+};
+
 export const patchUserSwitch = (
   slug: string,
   payload: PayloadPatchUserSwitch
