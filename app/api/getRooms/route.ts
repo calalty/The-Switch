@@ -1,5 +1,4 @@
 import redis from "@/redis";
-import { Room } from "@/typings";
 
 import { NextRequest, NextResponse } from "next/server";
 

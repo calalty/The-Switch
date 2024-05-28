@@ -1,4 +1,4 @@
-import { Room, User } from "@/typings";
+import { Room } from "@/typings";
 import redis from "../../../../redis";
 
 import { NextRequest, NextResponse } from "next/server";

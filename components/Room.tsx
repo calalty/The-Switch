@@ -5,10 +5,8 @@ import { useEffect, useState } from "react";
 import { Switch } from "./Switch";
 import { UsersTile } from "./UsersTile";
 import { clientPusher } from "@/pusher";
-import { useDetectInactiveUser } from "@/hooks/use-detect-inactive-user";
 import { AwayModal } from "./AwayModal";
 import { Session } from "next-auth";
-import { removeRoom, removeUserFromRoom } from "@/instance";
 
 type Props = {
   initialRoom: RoomType;
@@ -19,7 +17,6 @@ type Props = {
 export const Room = ({ initialRoom, slug, session }: Props) => {
   const [room, setRoom] = useState(initialRoom);
   const roomId = slug[0];
-  const isUserInactive = useDetectInactiveUser();
   const roomUsers = room?.users;
   const user = session?.user;
 
